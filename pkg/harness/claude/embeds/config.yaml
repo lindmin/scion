@@ -80,7 +80,6 @@ auth:
         - any_of: ["ANTHROPIC_BASE_URL"]
   autodetect:
     env:
-      ANTHROPIC_AUTH_TOKEN: llm-gateway
       ANTHROPIC_BASE_URL: llm-gateway
       CLAUDE_CODE_OAUTH_TOKEN: oauth-token
       GOOGLE_APPLICATION_CREDENTIALS: vertex-ai

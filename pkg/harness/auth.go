@@ -62,8 +62,8 @@ func GatherAuthWithEnv(env map[string]string, localSources bool) api.AuthConfig 
 		AnthropicAuthToken: lookup("ANTHROPIC_AUTH_TOKEN"),
 		AnthropicBaseURL:   lookup("ANTHROPIC_BASE_URL"),
 		ClaudeOAuthToken:   lookup("CLAUDE_CODE_OAUTH_TOKEN"),
-		OpenAIAPIKey:     lookup("OPENAI_API_KEY"),
-		CodexAPIKey:      lookup("CODEX_API_KEY"),
+		OpenAIAPIKey:       lookup("OPENAI_API_KEY"),
+		CodexAPIKey:        lookup("CODEX_API_KEY"),
 		GoogleCloudProject: util.FirstNonEmpty(
 			lookup("GOOGLE_CLOUD_PROJECT"),
 			lookup("GCP_PROJECT"),
@@ -294,9 +294,7 @@ func DetectAuthTypeFromEnvVars(harnessName string, envKeys map[string]struct{}) 
 
 	switch harnessName {
 	case "claude":
-		_, hasBaseURL := envKeys["ANTHROPIC_BASE_URL"]
-		_, hasAuthToken := envKeys["ANTHROPIC_AUTH_TOKEN"]
-		if hasBaseURL || hasAuthToken {
+		if _, ok := envKeys["ANTHROPIC_BASE_URL"]; ok {
 			return "llm-gateway"
 		}
 		if _, ok := envKeys["ANTHROPIC_API_KEY"]; ok {

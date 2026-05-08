@@ -57,7 +57,7 @@ func (c *ClaudeCode) AdvancedCapabilities() api.HarnessAdvancedCapabilities {
 			AuthFile:   api.CapabilityField{Support: api.SupportYes},
 			OAuthToken: api.CapabilityField{Support: api.SupportYes},
 			VertexAI:   api.CapabilityField{Support: api.SupportYes},
-			LLMGateway:   api.CapabilityField{Support: api.SupportYes},
+			LLMGateway: api.CapabilityField{Support: api.SupportYes},
 		},
 		Resume: api.CapabilityField{Support: api.SupportYes},
 	}
@@ -410,19 +410,16 @@ func (c *ClaudeCode) ResolveAuth(auth api.AuthConfig) (*api.ResolvedAuth, error)
 		}
 	}
 
-	// Auto-detect preference order: LLM proxy → API key → OAuth token → credentials file → Vertex AI → error
+	// Auto-detect preference order: LLM Gateway → API key → OAuth token → credentials file → Vertex AI → error
 
-	// 0. LLM proxy (ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY + ANTHROPIC_BASE_URL)
-	if auth.AnthropicBaseURL != "" || auth.AnthropicAuthToken != "" {
+	// 0. LLM proxy (ANTHROPIC_BASE_URL + (ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY))
+	if auth.AnthropicBaseURL != "" {
 		token := auth.AnthropicAuthToken
 		if token == "" {
 			token = auth.AnthropicAPIKey
 		}
 		if token == "" {
 			return nil, fmt.Errorf("claude: ANTHROPIC_BASE_URL is set but no token found; set ANTHROPIC_AUTH_TOKEN or ANTHROPIC_API_KEY")
-		}
-		if auth.AnthropicBaseURL == "" {
-			return nil, fmt.Errorf("claude: ANTHROPIC_AUTH_TOKEN is set but ANTHROPIC_BASE_URL is not set")
 		}
 		return &api.ResolvedAuth{
 			Method: "llm-gateway",
