@@ -263,8 +263,8 @@
         },
         "auth_selected_type": {
           "type": "string",
-          "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai"],
-          "description": "Authentication mechanism to use (e.g., api-key, oauth-token, vertex-ai, auth-file)."
+          "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai", "llm-gateway"],
+          "description": "Authentication mechanism to use (e.g., api-key, oauth-token, vertex-ai, auth-file, llm-gateway)."
         },
         "secrets": {
           "type": "array",
@@ -453,7 +453,8 @@
             "api_key": { "$ref": "#/$defs/capabilityField" },
             "auth_file": { "$ref": "#/$defs/capabilityField" },
             "oauth_token": { "$ref": "#/$defs/capabilityField" },
-            "vertex_ai": { "$ref": "#/$defs/capabilityField" }
+            "vertex_ai": { "$ref": "#/$defs/capabilityField" },
+            "llm_gateway": { "$ref": "#/$defs/capabilityField" }
           },
           "additionalProperties": false
         },
@@ -475,7 +476,7 @@
       "properties": {
         "default_type": {
           "type": "string",
-          "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai"]
+          "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai", "llm-gateway"]
         },
         "types": {
           "type": "object",
@@ -533,14 +534,14 @@
           "type": "object",
           "additionalProperties": {
             "type": "string",
-            "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai"]
+            "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai", "llm-gateway"]
           }
         },
         "files": {
           "type": "object",
           "additionalProperties": {
             "type": "string",
-            "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai"]
+            "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai", "llm-gateway"]
           }
         }
       },
@@ -604,7 +605,7 @@
         "resources": { "$ref": "#/$defs/resourceSpec" },
         "auth_selected_type": {
           "type": "string",
-          "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai"]
+          "enum": ["api-key", "oauth-token", "auth-file", "vertex-ai", "llm-gateway"]
         }
       },
       "additionalProperties": false
